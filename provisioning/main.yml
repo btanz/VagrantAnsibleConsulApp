@@ -59,6 +59,9 @@
         image: db:postgres
         name: db
         state: running
+        env:
+          POSTGRES_DB: app
+          POSTGRES_USER: admin
         
 
     - name: Run www-Container

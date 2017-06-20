@@ -1,0 +1,14 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Dummy Web Application",
+  "author": "Benjamin Tanz <btanz@gmx.de>",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "pug": "2.0.0-rc.2"
+  }
+}

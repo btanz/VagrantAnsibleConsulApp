@@ -1,0 +1,71 @@
+---
+- hosts: all
+  become: yes
+  
+  tasks:
+    - name: Install Docker from the CentOS 7 repository.
+      yum:
+        name: docker
+        state: latest
+
+    # Start docker service
+    - service:
+        name: docker
+        state: started
+    
+    - name: Add vagrant user to docker group.
+      user:
+        name: vagrant
+        groups: dockerroot
+        append: yes
+      become: yes
+
+    - name: Install EPEL repo.
+      yum: 
+        name: epel-release
+        state: latest
+      register: result
+ 
+    - name: Install pip
+      yum: 
+        name: python-pip
+        state: latest
+      become: yes
+      register: result
+
+    - name: Install the Docker-Python-SDK.
+      pip: 
+        name: docker-py
+        state: latest
+      become: yes
+      register: result
+
+    - name: Build docker image for db (PostgreSQL).
+      docker_image:
+        name: db
+        tag: postgres
+        path: "/vagrant/provisioning/db"
+        state: build
+
+    - name: Build docker image for www (Node.js).
+      docker_image: 
+        name: www
+        tag: nodejs
+        path: "/vagrant/provisioning/www"
+        state: build 
+
+    - name: Run db-Container
+      docker: 
+        image: db:postgres
+        name: db
+        state: running
+        
+
+    - name: Run www-Container
+      docker:
+        image: www:nodejs
+        name: www
+        state: running
+        command: npm start 
+        ports: "80:80"
+      

@@ -71,4 +71,6 @@
         state: running
         command: npm start 
         ports: "80:80"
+        links: 
+          - "db:postgres"
       

@@ -1,4 +1,4 @@
----
+#---
 - hosts: all
   become: yes
   
@@ -84,30 +84,47 @@
         tag: nodejs
         path: "/vagrant/provisioning/www"
         state: build
+
+    - name: Create bridge network
+      docker_network:
+        name: app_net
+        driver: bridge
+        ipam_options:
+          subnet: '172.18.0.0/16'
  
-    - name: Run consul container in server mode (dev)
-      docker: 
+    - name: Run consul server container
+      docker_container: 
         image: consul:consul
-        name: consul
-        state: running
+        name: consulServer
+        state: started
+        command: 'agent -server -ui -bind=172.18.0.2 -client=172.18.0.2 -bootstrap-expect=1'
+        networks:
+          - name: "app_net"
+            ipv4_address: "172.18.0.2"
 
     - name: Run db-Container
-      docker: 
+      docker_container: 
         image: db:postgres
         name: db
-        state: running
+        state: started
         env:
           POSTGRES_DB: app
           POSTGRES_USER: admin
+        networks:
+          - name: "app_net"
+            ipv4_address: "172.18.0.3"
         
 
     - name: Run www-Container
-      docker:
+      docker_container:
         image: www:nodejs
         name: www
-        state: running
-        command: npm start 
+        state: started
+        command: 'npm start'
         ports: "80:80"
         links: 
           - "db:postgres"
+        networks:
+          - name: "app_net"
+            ipv4_address: "172.18.0.4"
       

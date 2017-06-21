@@ -11,4 +11,11 @@ COPY . /usr/src/app
 EXPOSE 80
 
 
+RUN mkdir -p /usr/bin/consul
+COPY ./consul /usr/bin/consul
 
+EXPOSE 8300
+
+EXPOSE 8301 8301/udp 8302 8302/udp
+
+EXPOSE 8500 8600 8600/udp

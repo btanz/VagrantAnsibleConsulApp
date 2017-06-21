@@ -26,6 +26,30 @@
         state: latest
       register: result
  
+    - name: Install unzip
+      yum: 
+        name: unzip
+        state: latest
+      become: yes
+      register: result
+
+    # create a directory for consul if it doesn't exist
+    - file:
+        path: /usr/bin/consul
+        state: directory
+        mode: 0755
+
+    - name: Download consul for the VM host
+      get_url:
+        url: https://releases.hashicorp.com/consul/0.8.4/consul_0.8.4_linux_amd64.zip
+        dest: /usr/bin/consul
+
+    # unarchive consul
+    - unarchive:
+        src: /usr/bin/consul/consul_0.8.4_linux_amd64.zip
+        dest: /usr/bin/consul
+        remote_src: True
+     
     - name: Install pip
       yum: 
         name: python-pip
@@ -40,6 +64,13 @@
       become: yes
       register: result
 
+    - name: Build docker image for Consul
+      docker_image:
+        name: consul
+        tag: consul
+        path: "/vagrant/provisioning/consul"
+        state: build
+
     - name: Build docker image for db (PostgreSQL).
       docker_image:
         name: db
@@ -52,7 +83,13 @@
         name: www
         tag: nodejs
         path: "/vagrant/provisioning/www"
-        state: build 
+        state: build
+ 
+    - name: Run consul container in server mode (dev)
+      docker: 
+        image: consul:consul
+        name: consul
+        state: running
 
     - name: Run db-Container
       docker: 

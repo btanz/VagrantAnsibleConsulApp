@@ -11,9 +11,10 @@ COPY . /usr/src/app
 EXPOSE 80
 
 
-RUN mkdir -p /usr/bin/consul
-COPY ./consul /usr/bin/consul
+#RUN mkdir -p /usr/bin/consul
+#COPY ./consul /usr/bin/consul
 
+# expose console ports
 EXPOSE 8300
 
 EXPOSE 8301 8301/udp 8302 8302/udp

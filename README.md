@@ -1,4 +1,7 @@
-# Client-Server-App using Vagrant, Ansible and Docker
+# Client-Server-App using Vagrant, Ansible and Consul
+
+This repository shows how to use Vagrant, Ansible and Consul for deploying a small app
+written in Node.js with a PostgreSQL backend.  
 
 The version of this hosted on [HashiCorp's Docker Hub for Consul](https://hub.docker.com/r/hashicorp/consul/)
 is built from the same source as the [Consul Official Image](https://hub.docker.com/_/consul/).

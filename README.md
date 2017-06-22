@@ -1,18 +1,21 @@
 # Client-Server-App using Vagrant, Ansible and Consul
 
-This repository shows how to use Vagrant, Ansible and Consul for deploying a small app
+This repository shows how to use Vagrant, Ansible, Consul and Docker for deploying a small app
 written in Node.js with a PostgreSQL backend.  
 
-The version of this hosted on [HashiCorp's Docker Hub for Consul](https://hub.docker.com/r/hashicorp/consul/)
-is built from the same source as the [Consul Official Image](https://hub.docker.com/_/consul/).
+To run the app, clone this repo and run 'vagrant up'. The app will then be available at '127.0.0.1:8080' and will show "Hello, world", retrieved from the database.
 
-There are several pieces that are used to build this image:
+Assumptions and notes:
 
-* We start with an Alpine base image and add CA certificates in order to reach
-  the HashiCorp releases server. These are useful to leave in the image so that
-  the container can access Atlas features as well.
-* Official HashiCorp builds of some base utilities are then included in the
-  image by pulling a release of docker-base. This includes dumb-init and gosu.
-  See https://github.com/hashicorp/docker-base for more details.
-* Finally a specific Consul build is fetched and the rest of the Consul-specific
-  configuration happens according to the Dockerfile.
+* The host machine has internet access
+* VirtualBox is installed
+* Prototype / Test environment assumed (DB has no persistent storage etc.)
+* Consul is running and can communicate via the bridge with other containers; check for example by running
+curl http://172.18.0.2:8500/v1/agent/members?pretty 
+on the VM-Host
+
+Next Steps:
+
+* Install consul on the www and db server and make the application discover database configuration on startup (not yet implemented) 
+
+

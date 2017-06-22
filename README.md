@@ -14,8 +14,8 @@ Assumptions and notes:
 curl http://172.18.0.2:8500/v1/agent/members?pretty 
 on the VM-Host
 
-Next Steps:
+Next Steps (excerpt):
 
 * Install consul on the www and db server and make the application discover database configuration on startup (not yet implemented) 
-
+* Structure playbooks into roles whenever appropriate
 

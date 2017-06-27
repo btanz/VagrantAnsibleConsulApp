@@ -120,8 +120,8 @@
         image: www:nodejs
         name: www
         state: started
-        command: 'npm start'
         ports: "80:80"
+        command: /usr/src/app/start.sh
         links: 
           - "db:postgres"
         networks:

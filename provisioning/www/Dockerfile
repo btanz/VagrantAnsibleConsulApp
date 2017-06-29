@@ -11,10 +11,6 @@ RUN chmod +x /usr/src/app/start.sh
 
 EXPOSE 80
 
-
-#RUN mkdir -p /usr/bin/consul
-#COPY ./consul /usr/bin/consul
-
 # expose consul ports
 EXPOSE 8300
 
@@ -22,5 +18,3 @@ EXPOSE 8301 8301/udp 8302 8302/udp
 
 EXPOSE 8500 8600 8600/udp
 
-# Run console agent in client mode
-#CMD ./consul agent -retry-join=172.18.0.2 -bind=172.18.0.4 -data-dir="/usr/src/app"

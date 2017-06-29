@@ -11,8 +11,8 @@ Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox" do |vb|
     vb.name = "app.docker"
     vb.gui = false
-    vb.memory = "2024"
-    vb.cpus = 4
+    vb.memory = "1024"
+    vb.cpus = 2
   end
 
   config.vm.provision "ansible" do |ansible|

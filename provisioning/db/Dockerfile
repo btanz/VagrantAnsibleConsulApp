@@ -3,7 +3,7 @@ FROM postgres:9.6
 # Create folder for consul and copy it
 RUN mkdir -p /usr/bin/consul
 COPY ./consul /usr/bin/consul
-
+RUN chmod 777 /usr/bin/consul
 
 # Copy initialization scripts. Scripts will run on container start
 COPY dbInit.sql /docker-entrypoint-initdb.d/dbInit.sql
